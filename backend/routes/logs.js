@@ -25,8 +25,10 @@ logs.patch('/:id', async (req, res) => {
     res.json(await log.update(req.body));
 })
 
-logs.delete('/:id', (req, res) => {
-    res.json('nah we aint deleting rn');
+logs.delete('/:id', async (req, res) => {
+    const log = await Log.find(req.params.id);
+    log.delete();
+    res.json('deleted');
 })
 
 

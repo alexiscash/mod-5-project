@@ -40,6 +40,10 @@ class Base {
         return (thing);
     }
 
+    async delete() {
+        await knex(this.constructor.name.toLowerCase() + 's').where({ id: this.id }).del();
+    }
+
     static belongsTo(name) {
         this.prototype[name] = async function() {
             // eval(pry.it);
@@ -59,7 +63,7 @@ class Base {
 
     static testProto() {
         this.prototype.test = () => {
-            return 'you know to to attach functions to the prototype bruh';
+            return 'you know how to attach functions to the prototype bruh';
         }
     }
 
