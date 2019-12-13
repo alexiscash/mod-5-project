@@ -5,7 +5,8 @@ exports.up = function(knex) {
         t.string('firstName');
         t.string('lastName');
         t.integer('age');
-
+        t.string('bio').defaultTo('sad boi');
+        // t.unique('email');
     })
 };
 

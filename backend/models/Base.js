@@ -5,6 +5,7 @@ const pry = require('pryjs');
 class Base {
 
     // all functions work the way they do in Ruby with ActiveRecord
+    // so far it's only been tested with sqlite3
     
     constructor(thang) {
         Object.assign(this, thang)
@@ -28,16 +29,16 @@ class Base {
 
     // takes an obj and creates a new record in db
     static async create(obj) {
-        const [ thangId ] = await knex(this.tableName + 's').insert(obj)
-        const [ thang ] = await knex(this.tableName + 's').where({ id: thangId })
-        return new this(thang);
+        const [ recordId ] = await knex(this.tableName + 's').insert(obj)
+        const [ record ] = await knex(this.tableName + 's').where({ id: recordId })
+        return new this(record);
     }
 
     // INSTANCE method that take obj and updates that record
     async update(obj) {
         await knex(this.constructor.name.toLowerCase() + 's').where({ id: this.id }).update(obj);
-        const [ thing ] = await knex(this.constructor.name.toLowerCase() + 's').where({ id: this.id })
-        return (thing);
+        const [ record ] = await knex(this.constructor.name.toLowerCase() + 's').where({ id: this.id })
+        return new this.constructor(record);
     }
 
     async delete() {
@@ -46,29 +47,16 @@ class Base {
 
     static belongsTo(name) {
         this.prototype[name] = async function() {
-            // eval(pry.it);
-            const [ thang ] = await knex(name.toLowerCase() + 's').where({ id: this[`${name}_id`] });
-            // eval(pry.it);
-            return thang;
+            const [ record ] = await knex(name.toLowerCase() + 's').where({ id: this[`${name}_id`] });
+            return record;
         }
     }
 
     static hasMany(name) {
         this.prototype[name] = async function() {
-            // eval(pry.it);
-            let arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
+            const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
             return arr;
         }
-    }
-
-    static testProto() {
-        this.prototype.test = () => {
-            return 'you know how to attach functions to the prototype bruh';
-        }
-    }
-
-    static dope() {
-        return 'ayy lmao';
     }
 }
 
