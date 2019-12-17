@@ -1,19 +1,23 @@
 
 exports.seed = async (knex) => {
   await knex('users').del();
-  await knex('logs').del();
+  await knex('journals').del();
   await knex('questions').del();
 
+  await knex('dates').insert([
+    { id: 1, date: 'January 1st 2020'}
+  ])
+
   await knex('users').insert([
-    { id: 1, firstName: 'alexis', lastName: 'rangel', age: 21 },
-    { id: 2, firstName: 'steven', lastName: 'nguyen', age: 30 },
-    { id: 3, firstName: 'max', lastName: 'bitch', age: 4 }
+    { id: 1, username: 'swag_boi', firstName: 'alexis', lastName: 'rangel', age: 21 },
+    { id: 2, username: 'big_dong69' firstName: 'steven', lastName: 'nguyen', age: 30 },
+    { id: 3, username: 'max_bitch69' firstName: 'max', lastName: 'bitch', age: 4 }
   ]);
 
-  await knex('logs').insert([
-    { id: 1, name: 'ayy lmao', user_id: 1 },
-    { id: 2, name: "don't even say nothing to me boi you look like a muhhfucking uhhh", user_id: 1 },
-    { id: 3, name: 'swag on infinity', user_id: 2 }
+  await knex('journals').insert([
+    { id: 1, name: 'ayy lmao', user_id: 1, date_id: 1 },
+    { id: 2, name: "don't even say nothing to me boi you look like a muhhfucking uhhh", user_id: 1, date_id: 1 },
+    { id: 3, name: 'swag on infinity', user_id: 2, date_id: 1 }
   ]);
 
   await knex('questions').insert([

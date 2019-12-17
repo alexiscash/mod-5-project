@@ -52,12 +52,54 @@ class Base {
         }
     }
 
-    static hasMany(name) {
+    // static hasMany(name) {
+    //     this.prototype[name] = async function() {
+    //         const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
+    //         return arr;
+    //     }
+    // }
+
+// User.hasMany('dates', { through: 'journals' })
+    static hasMany(name, opts = {}) {
+        if (opts.through) {
+            this.prototype[name] = async function() {
+                try {
+                    const arr = await knex(name)
+                            .innerJoin(opts.through, `${name}.id`, `${opts.through}.${name.substr(0, name.length -1)}_id`)
+                            .where({ [`${opts.through}.${this.constructor.tableName}_id`]: this.id })
+                            .select(`${name}.*`)
+                            .groupBy(`${name}.id`)
+                        return arr
+                } catch(err) {
+                    console.error('oh no', err);
+                }
+                
+            }
+            return 'ayy lmao';
+        }
+
         this.prototype[name] = async function() {
-            const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
+            const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id});
             return arr;
         }
     }
 }
+
+// function hasMany(name, opts = {}) { 
+//     if(opts.through){ // <- customers 
+//         // Many to many
+//         // SELECT * FROM  customers
+//         const arr = await knex(name)
+//             //  INNER JOIN customers ON customers.id = reviews.customer_id
+//             .innerJoin(name, `${name}.id`, `${opts.through}.${name.substr(0, name.length - 1)}_id`)
+//             // WHERE reviews.restraurant_id = this.id
+//             .where({ [`${opts.through}.${this.constructor.tableName}_id`]: this.id });
+//     } else {
+//         this.prototype[name] = async function () {
+//             const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
+//             return arr;
+//         }
+//     }
+// }
 
 module.exports = Base

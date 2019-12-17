@@ -2,19 +2,30 @@ const express = require('express');
 const users = express.Router();
 const User = require('../models/User');
 
-
-User.hasMany('logs');
+User.hasMany('journals')
+User.hasMany('dates', { through: 'journals'});
+// User.hasMany('logs');
 // User.testProto();
 
 users.get('/', async (req, res) => {
-    res.json(await User.all());
+    const users = await User.all();
+    console.log(users);
+    const arr = users.map(async (user) => {
+        const journals = await user.journals();
+        return {...user, journals}
+    })
+    // res.json(await User.all());
+    res.json(arr);
 });
 
 users.get('/:id', async (req, res) => {
     // User.testProto();
     const user = await User.find(req.params.id);
-    const logs = await user.logs();
-    res.json({...user, logs});
+    const dates = await user.dates();
+    const journals = await user.journals();
+
+    res.json({...user, dates, journals});
+    // res.json(User.hasMany('logs', { through: 'questions' }));
     // res.json(logs)
 
 })
