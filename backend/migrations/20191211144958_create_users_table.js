@@ -5,6 +5,8 @@ exports.up = function(knex) {
         t.string('username');
         t.string('firstName');
         t.string('lastName');
+        t.string('email'); // unique
+        t.string('password'); // encrypted
         t.integer('age');
         t.string('bio').defaultTo('sad boi');
         // t.unique('email');

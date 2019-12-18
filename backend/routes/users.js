@@ -8,14 +8,14 @@ User.hasMany('dates', { through: 'journals'});
 // User.testProto();
 
 users.get('/', async (req, res) => {
-    const users = await User.all();
-    console.log(users);
-    const arr = users.map(async (user) => {
-        const journals = await user.journals();
-        return {...user, journals}
-    })
+    // const users = await User.all();
+    // console.log(users);
+    // const arr = await users.map(async (user) => {
+    //     const journals = await user.journals();
+    //     return {...user, journals}
+    // })
     // res.json(await User.all());
-    res.json(arr);
+    res.status(200).json(await User.all());
 });
 
 users.get('/:id', async (req, res) => {
@@ -28,7 +28,7 @@ users.get('/:id', async (req, res) => {
     // res.json(User.hasMany('logs', { through: 'questions' }));
     // res.json(logs)
 
-})
+});
 
 users.post('/', async (req, res) => {
     res.json(await User.create(req.body));
@@ -42,7 +42,7 @@ users.patch('/:id', async (req, res) => {
 
 users.delete('/:id', (req, res) => {
     res.json("nah we aint deleting rn")
-})
+});
 
 
 
