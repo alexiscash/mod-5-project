@@ -1,11 +1,12 @@
 import React from 'react'
 
 export default function UserCard(props) {
+    console.log(localStorage);
     return (
         <div>
-            <p>name: {props.firstName + ' ' + props.lastName}</p>
-            <p>age: {props.age}</p>
-            <p>bio: {props.bio}</p>
+            <p>name: {localStorage.firstName + ' ' + localStorage.lastName}</p>
+            <p>age: {localStorage.age}</p>
+            <p>bio: {localStorage.bio}</p>
         </div>
     )
 }

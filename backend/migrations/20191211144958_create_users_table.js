@@ -9,6 +9,7 @@ exports.up = function(knex) {
         t.string('password'); // encrypted
         t.integer('age');
         t.string('bio').defaultTo('sad boi');
+        t.boolean('admin').defaultTo(false);
         // t.unique('email');
     })
 };

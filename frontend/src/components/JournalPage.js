@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default function JournalPage() {
+export default function JournalPage(props) {
     return (
-        <div>this is the journal page</div>
+        <div>
+            <ul>
+                <li>{localStorage.journals[0].name}</li>
+            </ul>
+        </div>
     )
 }

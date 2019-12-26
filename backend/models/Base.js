@@ -15,16 +15,27 @@ class Base {
         return this.name.toLowerCase();
     }
 
-    // find by id
-    static async find(id) {
-        const [ thang ] = await knex(this.tableName + 's').where({ id: id });
-        return new this(thang);
-    }
-
     // => self.all
     static async all() {
         const arr = await knex(this.tableName + 's');
         return arr;
+    }
+
+    // find by id
+    static async find(id) {
+        const [ record ] = await knex(this.tableName + 's').where({ id: id });
+        return new this(record);
+    }
+
+    static async findBy(obj) {
+        // console.log(knex);
+        try {
+            // console.log(knex)
+            const [user] = await knex('users').where(obj)
+            return new this(user);
+        } catch(err) {
+            return { status: 'no such user', err };
+        }
     }
 
     // takes an obj and creates a new record in db
@@ -52,14 +63,6 @@ class Base {
         }
     }
 
-    // static hasMany(name) {
-    //     this.prototype[name] = async function() {
-    //         const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
-    //         return arr;
-    //     }
-    // }
-
-// User.hasMany('dates', { through: 'journals' })
     static hasMany(name, opts = {}) {
         if (opts.through) {
             this.prototype[name] = async function() {
@@ -84,22 +87,5 @@ class Base {
         }
     }
 }
-
-// function hasMany(name, opts = {}) { 
-//     if(opts.through){ // <- customers 
-//         // Many to many
-//         // SELECT * FROM  customers
-//         const arr = await knex(name)
-//             //  INNER JOIN customers ON customers.id = reviews.customer_id
-//             .innerJoin(name, `${name}.id`, `${opts.through}.${name.substr(0, name.length - 1)}_id`)
-//             // WHERE reviews.restraurant_id = this.id
-//             .where({ [`${opts.through}.${this.constructor.tableName}_id`]: this.id });
-//     } else {
-//         this.prototype[name] = async function () {
-//             const arr = await knex(name).where({ [`${this.constructor.tableName}_id`]: this.id });
-//             return arr;
-//         }
-//     }
-// }
 
 module.exports = Base

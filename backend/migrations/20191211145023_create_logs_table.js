@@ -4,6 +4,7 @@ exports.up = function(knex) {
         t.increments('id');
         t.integer('user_id');
         t.integer('date_id');
+        t.integer('question_id');
         t.integer('score');
     });
 };
