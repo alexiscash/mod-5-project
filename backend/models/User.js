@@ -40,7 +40,7 @@ class User extends Base {
         const header = req.headers.authorization.split(' ');
         const token = header[1];
         auth.decodeToken(token, (err, payload) => {
-            console.log(payload);
+            // console.log(payload);
             if (err) {
                 return res.status(401).json(err);
             }

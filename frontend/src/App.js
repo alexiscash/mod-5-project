@@ -26,9 +26,10 @@ class App extends React.Component {
         email: 'johndoe@email.com',
         username: 'JDoe',
         journals: [
-          {name: 'something'}
+          {id: '234'}
         ],
-        dates: []
+        dates: [],
+        q: []
       },
       defaultUser: {
         firstName: 'John',
@@ -38,23 +39,33 @@ class App extends React.Component {
         email: 'johndoe@email.com',
         username: 'JDoe',
         journals: [
-          {name: 'something'}
+          {id: 345}
         ],
-        dates: []
+        dates: [],
+        q: []
       }
     }
   }
 
-  // componentDidMount() {
-  //   // fetch('http://localhost:3000/users')
-  //   // .then(res => res.json())
-  //   // .then(users => this.setState({users}))
-  //   // .catch(err => console.error('oh no ', err));
-  //   localStorage.firstName = this.state.defaultUser.firstName;
-  //   localStorage.lastName = this.state.defaultUser.lastName;
-  //   localStorage.age = this.state.defaultUser.age;
-  //   localStorage.bio = this.state.defaultUser.bio;
-  // }
+  componentDidMount() {
+    if (localStorage.token) {
+      // console.log('there is a token');
+      fetch(`http://localhost:3000/users/${localStorage.id}`, {
+        headers: {
+          "Authorization": `Bearer ${localStorage.token}`
+        }
+      })
+      .then(res => res.json())
+      .then(user => {
+        this.setState({user});
+      });
+    }
+  }
+
+  range = (start, end) => {
+    if(start === end) return [start];
+    return [start, ...this.range(start + 1, end)];
+  }
 
   logout = () => {
     localStorage.clear();
@@ -62,6 +73,8 @@ class App extends React.Component {
     localStorage.lastName = this.state.defaultUser.lastName;
     localStorage.age = this.state.defaultUser.age;
     localStorage.bio = this.state.defaultUser.bio;
+    localStorage.username = this.state.defaultUser.username;
+    localStorage.journals = this.state.defaultUser.journals
     this.setState({
       user: this.state.defaultUser
     })
@@ -89,35 +102,74 @@ class App extends React.Component {
         localStorage.lastName = user.lastName;
         localStorage.email = user.email;
         localStorage.age = user.age;
-        localStorage.journals = user.journals;
-        localStorage.q = user.q;
-        // localStorage = user;
-        console.log(user);
+        localStorage.id = user.id;
+        // localStorage.journals = user.journals;
+        // localStorage.q = user.q;
+        // console.log(user);
         this.setState({
           user 
         })
       }
     });
+    e.target.reset();
+    // this.history.push('/home');
   }
 
+  signup = (e) => {
+    e.preventDefault();
+    // debugger;
+    const [ firstName, lastName, username, age, email, password ] = this.range(0,5).map(i => e.target[i].value)
+    fetch('http://localhost:3000/users/register', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            firstName,
+            lastName,
+            username,
+            age,
+            email,
+            password
+        })
+    })
+    .then(res => res.json())
+    .then(user => {
+      if (user.status === 'success') {
+        console.log(user);
+        localStorage.firstName = user.firstName;
+        localStorage.lastName = user.lastName;
+        localStorage.username = user.username;
+        localStorage.id = user.id;
+        localStorage.age = user.age;
+        localStorage.token = user.token;
+        localStorage.email = user.email
+        localStorage.journals = user.journals;
+        this.setState({user})
+        console.log(this.state.user);
+      }
+    });
+    
+}
+
   render() {
-    // console.log(this.state.users);
+    // console.log(this.state.user);
     return (
-      <div className='App'>
+      <div className='App' style={{ background: '#99ccff' }}>
         <BrowserRouter>
-        <div>
-        <NavBar {...this.props}/>
+        <NavBar />
         <Switch>
+          {/* <NavBar history={history} /> */}
           <Route exact path='/' render={() => <HomePage {...this.state.user} />} />
-          <Route path='/journal' render={() => <JournalContainer journals={this.state.user.journals} />} />
-          <Route path='/results' component={ResultsContainer} />
+          <Route path='/journal' render={() => <JournalContainer {...this.state.user} />} />
+          <Route path='/results' render={() => <ResultsContainer journals={this.state.user.journals} />} />
           <Route path='/discover' component={DiscoverContainer} />
           {/* <Route path='/login' component={LoginPage} history={this.history} logout={this.logout} /> */}
-          <Route path='/login' render={() => <LoginPage logout={this.logout} login={this.login} />} history={this.history} />
+          <Route path='/login' render={(history) => <LoginPage logout={this.logout} login={this.login} history={history} signup={this.signup} />}  />
         </Switch>
-        </div>
         </BrowserRouter>
         <UserContainer {...this.state.user}/>
+        <P5Wrapper sketch={sketch} />
         <P5Wrapper sketch={sketch} />
       </div>
     );

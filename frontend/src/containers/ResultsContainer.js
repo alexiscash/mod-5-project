@@ -1,9 +1,13 @@
 import React from 'react';
+import ResultsGraph from '../components/ResultsGraph'
 
-export default class ResultsContainer extends React.Component {
-    render() {
-        return (
-            <div>this is the results container</div>
-        )
-    }
+export default function ResultsContainer(props) {
+    console.log(props);
+
+    return (
+        <div>
+            <p>this is the results container</p>
+            <ResultsGraph journals={props.journals} />
+            </div>
+    )
 }

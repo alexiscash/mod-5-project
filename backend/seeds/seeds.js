@@ -19,11 +19,13 @@ exports.seed = async (knex) => {
   ]);
 
   await knex('journals').insert([
-    { id: 1, user_id: 1, date_id: 1, question_id: 1, score: 3 },
-    { id: 2, user_id: 1, date_id: 1, question_id: 3, score: 4 },
-    { id: 3, user_id: 2, date_id: 1, question_id: 6, score: 5 },
-    { id: 4, user_id: 3, date_id: 2, question_id: 5, score: 5 },
-    { id: 5, user_id: 3, date_id: 2, question_id: 18, score: 5 }
+    { id: 1, user_id: 1, date_id: 1, question_id: 1, score: 3, affirmative: true },
+    { id: 2, user_id: 1, date_id: 1, question_id: 3, score: 4, affirmative: false },
+    { id: 3, user_id: 2, date_id: 1, question_id: 6, score: 5, affirmative: false },
+    { id: 4, user_id: 3, date_id: 2, question_id: 5, score: 5, affirmative: true },
+    { id: 5, user_id: 3, date_id: 2, question_id: 18, score: 5, affirmative: true },
+    { id: 6, user_id: 1, date_id: 2, question_id: 24, score: 1, affirmative: false },
+    { id: 7, user_id: 1, date_id: 2, question_id: 11, score: 4, affirmative: true }
   ]);
 
   await knex('questions').insert([
@@ -33,7 +35,7 @@ exports.seed = async (knex) => {
     { id: 4, content: 'Do you have less or no appetite today?' },
     { id: 5, content: 'Do you find it difficult to make decisions lately?' },
     { id: 6, content: 'Are you feeling up to your tasks?' },
-    { id: 7, content: 'Are you looking hopefully into the futuyre?' },
+    { id: 7, content: 'Are you looking hopefully into the future?' },
     { id: 8, content: 'Have you been blaming yourself recently?' },
     { id: 9, content: 'Are you finding it difficult to take care of your responsibilities because of how your feel?' },
     { id: 10, content: 'Does the way you feel interfere with how you spend your free time?' },
@@ -55,6 +57,8 @@ exports.seed = async (knex) => {
     { id: 26, content: 'Do you sometimes feel like a stranger to yourself?' },
     { id: 27, content: "Are your feelings often so chaotic that I can't describe them?" },
     { id: 28, content: 'Are you finding it difficult to handle your responsibilities because of the way you feel?' },
-    { id: 29, content: 'Have you been crying a lot lately?' }
+    { id: 29, content: 'Have you been crying a lot lately?' },
+    { id: 30, content: 'Have you been thinking about certain topics or problems repeatedly, without coming to a solution?' },
+    { id: 31, content: 'Are you speaking or moving more slowly than usual?' }
   ])
 }

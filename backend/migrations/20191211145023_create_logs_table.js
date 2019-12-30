@@ -6,6 +6,7 @@ exports.up = function(knex) {
         t.integer('date_id');
         t.integer('question_id');
         t.integer('score');
+        t.boolean('affirmative');
     });
 };
 

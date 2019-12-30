@@ -34,7 +34,7 @@ users.get('/', async (req, res) => {
 //     }
 // });
 
-users.get('/:id', async (req, res) => {
+users.get('/:id', User.ensureAuthenticated, async (req, res) => {
     try {
         const user = await User.find(req.params.id);
         delete user.password;
@@ -66,8 +66,11 @@ users.post('/register', async (req, res) => {
     try {
         const user = await User.createUser(req.body);
         delete user.password;
+        const journals = await user.journals();
+        const dates = await user.dates();
+        const q = await user.questions()
         const token = auth.encodeToken(user);
-        res.status(200).json({...user, token, status: 'success'});
+        res.status(200).json({...user, journals, dates, q, token, status: 'success'});
     } catch(err) {
         res.status(500).json({status: 'error', err})
     }  
