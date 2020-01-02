@@ -1,14 +1,22 @@
 import React from 'react';
-import {Line} from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 
 
 export default function ResultsGraph(props) {
 
     console.log(props);
+
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const dates = props.dates.map(d => {
+        if (d.month === 12) {
+            return `${months[11]} ${d.date}`
+        }
+        return `${months[d.month]} ${d.date}`
+    })
+
     const state = {
-    labels: ['January', 'February', 'March',
-            'April', 'May'],
+    labels: dates,
     datasets: [
         {
         label: 'Mood',
@@ -22,13 +30,27 @@ export default function ResultsGraph(props) {
     ]
     }
     return (
-      <div>
+      <div style={{padding: '5em'}}>
         <Line
           data={state}
           options={{
             title:{
               display:true,
               text:'How Your Mood Trends',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
+        <Bar
+          data={state}
+          options={{
+            title:{
+              display:true,
+              text:'Average Mood Per Month',
               fontSize:20
             },
             legend:{

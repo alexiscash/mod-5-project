@@ -1,6 +1,6 @@
 import React from 'react'
 import SignUp from './SignUp'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
 export default function LoginPage(props) {
 
@@ -11,20 +11,6 @@ export default function LoginPage(props) {
         setTimeout(() => {
             props.history.history.push('/')
         }, 500)
-    }
-
-    function test() {
-        fetch('http://localhost:3000/users/1', {
-            headers: {
-                "Authorization": `Bearer ${localStorage.token}`
-            }
-        })
-        .then(res => res.json())
-        .then(console.log);
-    }
-
-    function testt() {
-        console.log('submit');
     }
 
     return (
@@ -40,7 +26,14 @@ export default function LoginPage(props) {
         //     <button onClick={props.logout}>test logout</button>
         //     <SignUp signup={props.signup} history={props.history.history}/>
         // </div>
+        localStorage.token ?
         <div>
+            <h2>you're logged in bruh</h2>
+            <button onClick={props.logout}>Log out</button>
+        </div>
+        :
+        <div style={{paddingLeft: '10em', paddingRight: '10em'}}>
+            <h1>Log In</h1>
             <Form onSubmit={(e) => superLogin(e)}>
                 <Form.Field>
                     <label>Username</label>
@@ -50,9 +43,9 @@ export default function LoginPage(props) {
                     <label>Password</label>
                     <input placeholder='password' type='password'></input>
                 </Form.Field>
-                <Button type='submit'>Log In</Button>
+                <Button color='red' type='submit'>Log In</Button>
             </Form>
-            <button onClick={props.logout}>test logout</button>
+            <br />
             <SignUp signup={props.signup} history={props.history.history}/>
         </div>
     )

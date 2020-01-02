@@ -153,20 +153,18 @@ class App extends React.Component {
 }
 
   render() {
-    // console.log(this.state.user);
+    console.log(this.state.user);
     return (
       <div className='App' style={{ background: '#99ccff' }}>
         <BrowserRouter>
-        <NavBar />
-        <Switch>
-          {/* <NavBar history={history} /> */}
-          <Route exact path='/' render={() => <HomePage {...this.state.user} />} />
-          <Route path='/journal' render={() => <JournalContainer {...this.state.user} />} />
-          <Route path='/results' render={() => <ResultsContainer journals={this.state.user.journals} />} />
-          <Route path='/discover' component={DiscoverContainer} />
-          {/* <Route path='/login' component={LoginPage} history={this.history} logout={this.logout} /> */}
-          <Route path='/login' render={(history) => <LoginPage logout={this.logout} login={this.login} history={history} signup={this.signup} />}  />
-        </Switch>
+          <NavBar />
+          <Switch>
+              <Route exact path='/' render={() => <HomePage {...this.state.user} />} />
+              <Route path='/journal' render={() => <JournalContainer {...this.state.user} />} />
+              <Route path='/results' render={() => <ResultsContainer journals={this.state.user.journals} dates={this.state.user.dates} />} />
+              <Route path='/discover' component={DiscoverContainer} />
+              <Route path='/login' render={(history) => <LoginPage logout={this.logout} login={this.login} history={history} signup={this.signup} />}  />
+          </Switch>
         </BrowserRouter>
         <UserContainer {...this.state.user}/>
         <P5Wrapper sketch={sketch} />

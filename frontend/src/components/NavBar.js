@@ -3,16 +3,37 @@ import { Link } from 'react-router-dom';
 
 export default function NavBar() {
         return (
+            // <div>
+                // <img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'200px'} alt={'dope'}/>
+            //     <p>
+            //         <Link to='/'>Home </Link> 
+            //         <Link to='/journal'>Journal </Link> 
+            //         <Link to='/results'>Results </Link> 
+            //         {/* <Link to='/discover'>Discover </Link>  */}
+            //         <Link to='/login'>Login</Link>
+            //     </p>
+            // </div>
             <div>
-                <img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'200px'} alt={'dope'}/>
-                <p>
-                    <Link to='/'>Home </Link> 
-                    <Link to='/journal'>Journal </Link> 
-                    <Link to='/results'>Results </Link> 
-                    {/* <Link to='/discover'>Discover </Link>  */}
-                    <Link to='/login'>Login</Link>
-                </p>
+            <img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'200px'} alt={'dope'}/>
+            <div className="ui secondary  menu">
+            <a className="active item">
+                <Link to='/'>Home</Link>
+            </a>
+            <a className="item">
+                <Link to='/journal'>Journal</Link>
+            </a>
+            <a className="item">
+                <Link to='/results'>Results</Link>
+            </a>
+            <div className="right menu">
+                
+                <a className="ui item">
+                <Link to='/login'>Login</Link>
+                </a>
             </div>
+            </div>
+            </div>
+            
         );
     
 }
