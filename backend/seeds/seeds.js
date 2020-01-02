@@ -8,8 +8,8 @@ exports.seed = async (knex) => {
   await knex('dates').del();
 
   await knex('dates').insert([
-    { id: 1, date: 'January 1st 2020' },
-    { id: 2, date: 'January 2nd 2020' }
+    { id: 1, date: 29, month: 12, year: 2019 },
+    { id: 2, date: 30, month: 12, year: 2019 }
   ])
 
   await knex('users').insert([

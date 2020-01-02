@@ -22,7 +22,7 @@ app.use('/slut', express.static('public'));
 app.use('/users', users);
 app.use('/journals', journals);
 app.use('/questions', questions);
-app.use('/date', dates);
+app.use('/dates', dates);
 
 app.get('/', (req, res) => {
     res.json(User.tableName);

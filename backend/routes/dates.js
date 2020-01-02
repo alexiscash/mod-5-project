@@ -1,15 +1,27 @@
 const express = require('express');
 const dates = express.Router();
-const Date = require('../models/Date');
+const Dates = require('../models/Date');
 
-Date.hasMany('journals')
+Dates.hasMany('journals')
 
 dates.get('/', async (req, res) => {
-    res.json(await Date.all())
+    res.json(await Dates.all())
+});
+
+dates.get('/today', async (req, res) => {
+    let today = new Date();
+    const date = await Dates.findBy({date: today.getDate()})
+    // const date = await Dates.findBy({date: 23})
+    if (date) {
+            res.status(200).json({date});
+    } else {
+        res.status(200).json(await Dates.create({date: today.getDate(), month: today.getMonth(), year: today.getFullYear()}))
+    }
+    // res.json({date});
 });
 
 dates.get('/:id', async (req, res) => {
-    const date = await Date.find(req.params.id);
+    const date = await Dates.find(req.params.id);
     const journals = await date.journals();
     res.json({...date, journals})
 });
@@ -19,7 +31,7 @@ dates.post('/', async (req, res) => {
 });
 
 dates.patch('/:id', async (req, res) => {
-    const date = await Date.find(req.params.id);
+    const date = await Dates.find(req.params.id);
     res.json(await date.update(req.body));
 })
 
