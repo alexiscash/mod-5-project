@@ -11,6 +11,7 @@ import ResultsContainer from './containers/ResultsContainer'
 import DiscoverContainer from './containers/DiscoverContainer';
 import LoginPage from './components/LoginPage'
 import UserContainer from './containers/UserContainer';
+import SciencePage from './components/SciencePage';
 
 class App extends React.Component {
 
@@ -146,23 +147,22 @@ class App extends React.Component {
         localStorage.email = user.email
         localStorage.journals = user.journals;
         this.setState({user})
-        console.log(this.state.user);
       }
     });
     
 }
 
   render() {
-    console.log(this.state.user);
     return (
-      <div className='App' style={{ background: '#99ccff' }}>
+      <div className='App'>
         <BrowserRouter>
-          <NavBar />
+          <NavBar logout={this.logout}/>
           <Switch>
               <Route exact path='/' render={() => <HomePage {...this.state.user} />} />
               <Route path='/journal' render={() => <JournalContainer {...this.state.user} />} />
               <Route path='/results' render={() => <ResultsContainer journals={this.state.user.journals} dates={this.state.user.dates} />} />
               <Route path='/discover' component={DiscoverContainer} />
+              <Route path='/science' component={SciencePage} />
               <Route path='/login' render={(history) => <LoginPage logout={this.logout} login={this.login} history={history} signup={this.signup} />}  />
           </Switch>
         </BrowserRouter>

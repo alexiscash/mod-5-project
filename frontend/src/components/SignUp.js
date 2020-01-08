@@ -13,7 +13,7 @@ export default function SignUp(props) {
     }
 
     return (
-        <Modal trigger={<Button color='red' size='mini'>Sign up</Button>} >
+        <Modal trigger={<Button primary size='mini'>Sign up</Button>} >
             <div>
                 <form  onSubmit={(e) => thing(e)} className="ui form" style={{padding: '2em'}}>
                     <div className="field">
@@ -44,12 +44,12 @@ export default function SignUp(props) {
                         <label>Confirm Password</label>
                         <input placeholder="Password" type='password' />
                     </div>
-                    <div className="field">
+                    {/* <div className="field">
                         <div className="ui checkbox">
                         <input type="checkbox" className="hidden" readOnly="" tabIndex="0" />
                         <label>I agree to the Terms and Conditions</label>
                         </div>
-                    </div>
+                    </div> */}
                     <button type="submit" className="ui button">Submit</button>
                 </form>
             </div>  

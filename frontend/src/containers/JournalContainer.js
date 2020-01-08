@@ -146,7 +146,7 @@ export default class JournalContainer extends React.Component {
                 {/* <AddQuestionModal thang={this.postQuestion}/> */}
                 </div>
             :
-                <div>
+                <div style={{paddingTop: '2em'}}>
                     <h1>Journal</h1>
                     <h2>Please log in</h2>
                 </div>

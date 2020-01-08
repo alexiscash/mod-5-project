@@ -14,7 +14,8 @@ export default function sketch (p) {
     }
 
     p.draw = function() {
-        p.background(153, 204, 255);
+        // p.background(153, 204, 255);
+        p.background(255);
 
         if (p.millis() > next && painting) {
             current.x = p.mouseX;

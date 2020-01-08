@@ -14,25 +14,13 @@ export default function LoginPage(props) {
     }
 
     return (
-        // <div>
-        //     <form onSubmit={(e) => superLogin(e)}>
-        //         <label>username: </label>
-        //         <input placeholder='username' type='text'></input>
-        //         <label>password: </label>
-        //         <input type='password'></input>
-        //         <button type='submit' >submit</button>
-        //     </form>
-        //     <button onClick={test}>test authorization</button>
-        //     <button onClick={props.logout}>test logout</button>
-        //     <SignUp signup={props.signup} history={props.history.history}/>
-        // </div>
         localStorage.token ?
         <div>
             <h2>you're logged in bruh</h2>
             <button onClick={props.logout}>Log out</button>
         </div>
         :
-        <div style={{paddingLeft: '10em', paddingRight: '10em'}}>
+        <div style={{paddingLeft: '25em', paddingRight: '25em'}}>
             <h1>Log In</h1>
             <Form onSubmit={(e) => superLogin(e)}>
                 <Form.Field>
@@ -43,7 +31,7 @@ export default function LoginPage(props) {
                     <label>Password</label>
                     <input placeholder='password' type='password'></input>
                 </Form.Field>
-                <Button color='red' type='submit'>Log In</Button>
+                <Button primary type='submit'>Log In</Button>
             </Form>
             <br />
             <SignUp signup={props.signup} history={props.history.history}/>

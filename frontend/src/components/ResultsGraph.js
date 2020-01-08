@@ -5,8 +5,6 @@ import { Line, Bar } from 'react-chartjs-2';
 
 export default function ResultsGraph(props) {
 
-    console.log(props);
-
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     const dates = props.dates.map(d => {
         if (d.month === 12) {
@@ -30,6 +28,8 @@ export default function ResultsGraph(props) {
     ]
     }
     return (
+      localStorage.token ?
+
       <div style={{padding: '5em'}}>
         <Line
           data={state}
@@ -50,7 +50,7 @@ export default function ResultsGraph(props) {
           options={{
             title:{
               display:true,
-              text:'Average Mood Per Month',
+              text:'Average Mood',
               fontSize:20
             },
             legend:{
@@ -59,6 +59,10 @@ export default function ResultsGraph(props) {
             }
           }}
         />
+      </div>
+      :
+      <div style={{paddingTop:'2em'}}>
+        <h2>Please Log In</h2>
       </div>
     );
 }

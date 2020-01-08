@@ -1,82 +1,85 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function NavBar() {
+export default class NavBar extends React.Component {
+
+
+    constructor() {
+        super();
+
+        this.state = {
+            ...this.aStyle
+        }
+        this.navStyle = {
+            paddingRight: '5em',
+            paddingLeft: '5em',
+            paddingTop: '2em',
+            // paddingBottom: '5em',
+            color: '#03AEB5',
+            background: 'white',
+            width: '100%',
+            display: 'block',
+            overflow: 'hidden',
+            // position: 'fixed'
+        }
+        this.aStyle = {
+            display: 'inline-block',
+            padding: '0.35em 1.2em',
+            border: '0.1em solid #000000',
+            fontFamily: 'Roboto sans-serif',
+            fontWeight: '300',
+            borderRadius: '0.12em',
+            boxSizing: 'border-box',
+            textDecoration: 'none',
+            color: '#000000'
+        }
+
+        this.hoverStyle = {
+            color: '#FFFFFF',
+            backgroundColor: '#000000'
+        }
+    }
+
+    mouseHover = () =>  {
+        this.setState({...this.hoverStyle})
+    }
+
+
+    // const aStyle = 
+
+    // const hoverStyle = {
+    //     color: '#FFFFFF',
+    //     backgroundColor: '#000000'
+    // }
+
+    render() {
         return (
-            // <div>
-                // <img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'200px'} alt={'dope'}/>
-            //     <p>
-            //         <Link to='/'>Home </Link> 
-            //         <Link to='/journal'>Journal </Link> 
-            //         <Link to='/results'>Results </Link> 
-            //         {/* <Link to='/discover'>Discover </Link>  */}
-            //         <Link to='/login'>Login</Link>
-            //     </p>
-            // </div>
-            <div>
-            <img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'200px'} alt={'dope'}/>
-            <div className="ui secondary  menu">
-            <a className="active item">
-                <Link to='/'>Home</Link>
+            // #03AEB5
+            <div style={this.navStyle}>
+            <div className="ui secondary menu">
+            <a className="item">
+                <Link to='/'><img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'200px'} alt={'dope'}/></Link>
             </a>
             <a className="item">
-                <Link to='/journal'>Journal</Link>
+                <Link onMouseEnter={this.mouseHover} to='/journal'>Journal</Link>
             </a>
             <a className="item">
                 <Link to='/results'>Results</Link>
             </a>
+            <a className="item">
+                <Link to='/science'>Science</Link>
+            </a>
             <div className="right menu">
-                
-                <a className="ui item">
-                <Link to='/login'>Login</Link>
-                </a>
+                {localStorage.token ?
+                    <a className='item'><Link onClick={this.props.logout}>Logout</Link></a> :
+                    <a className="ui item">
+                    <Link to='/login'>Login</Link>
+                    </a>
+                }
             </div>
             </div>
             </div>
-            
         );
-    
+    }
+     
 }
-// import React, { Component } from 'react'
-// import { Menu } from 'semantic-ui-react'
-
-// export default class MenuExampleSecondaryPointing extends Component {
-//   state = { activeItem: 'home' }
-
-//   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-//   render() {
-//     const { activeItem } = this.state
-//     console.log(this.props);
-
-//     return (
-//       <div>
-//         <img src={'https://mymoodpath.com/wp-content/themes/moodpath/img/logo/cyan.svg'} width={'250px'} alt={'dope'}/>
-//         <Menu pointing secondary>
-//           <Menu.Item
-//             name='home'
-//             active={activeItem === 'home'}
-//             onClick={this.handleItemClick}
-//           />
-//           <Menu.Item
-//             name='journal'
-//             active={activeItem === 'journal'}
-//             onClick={this.handleItemClick}
-//           />
-//           <Menu.Item
-//             name='results'
-//             active={activeItem === 'results'}
-//             onClick={this.handleItemClick}
-//           />
-//           <Menu.Menu position='right'>
-//             <Menu.Item
-//               name='logout'
-//               active={activeItem === 'logout'}
-//               onClick={this.handleItemClick}
-//             />
-//           </Menu.Menu>
-//         </Menu>
-//       </div>
-//     )
-//   }
-// }
