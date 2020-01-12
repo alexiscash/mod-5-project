@@ -6,8 +6,6 @@ const auth = require('../auth/local');
 User.hasMany('journals')
 User.hasMany('dates', { through: 'journals'});
 User.hasMany('questions', { through: 'journals' })
-// User.hasMany('logs');
-// User.testProto();
 
 users.get('/', async (req, res) => {
     try {
@@ -22,17 +20,15 @@ users.get('/', async (req, res) => {
     }
 });
 
-// users.get('/:id', User.ensureAuthenticated, async (req, res) => {
-//     try {
-//         const user = await User.find(req.params.id);
-//         delete user.password;
-//         const dates = await user.dates();
-//         const journals = await user.journals();
-//         res.status(200).json({...user, dates, journals, status: 'success'});
-//     } catch (err) {
-//         res.status(500).json({ status: 'internal server error', err})
-//     }
-// });
+users.get('/usernames', async (req, res) => {
+    try {
+        let users = await User.all();
+        users = users.map(user => user.username)
+        res.status(200).json(users) 
+    } catch (err) {
+        res.status(500).json({ status: 'error', err})
+    }
+})
 
 users.get('/:id', User.ensureAuthenticated, async (req, res) => {
     try {
@@ -46,12 +42,6 @@ users.get('/:id', User.ensureAuthenticated, async (req, res) => {
         res.status(500).json({ status: 'internal server error', err})
     }
 });
-
-// users.get('/info', User.ensureAuthenticated, async (req, res) => {
-//     try {
-//         const data = 
-//     }
-// })
 
 users.post('/', async (req, res) => {
     try {
@@ -100,7 +90,6 @@ users.patch('/:id', User.ensureAuthenticated, async (req, res) => {
 users.delete('/:id', (req, res) => {
     res.json("nah we aint deleting rn");
 });
-
 
 
 module.exports = users;

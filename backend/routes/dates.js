@@ -11,13 +11,11 @@ dates.get('/', async (req, res) => {
 dates.get('/today', async (req, res) => {
     let today = new Date();
     const date = await Dates.findBy({date: today.getDate()})
-    // const date = await Dates.findBy({date: 23})
     if (date) {
             res.status(200).json({date});
     } else {
         res.status(200).json(await Dates.create({date: today.getDate(), month: today.getMonth(), year: today.getFullYear()}))
     }
-    // res.json({date});
 });
 
 dates.get('/:id', async (req, res) => {

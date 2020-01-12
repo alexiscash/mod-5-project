@@ -20,7 +20,7 @@ export default function SciencePage() {
                     <h2>We believe in the importance of innovative and interactive product design</h2>
                     <p style={{fontSize: '1.2em'}}>Not only do we validate Moodpath from its professional and technical point of view, we also make sure that it is easily integrated into the everyday life of the users. To achieve that, we work closely with design and product experts and listen carefully to the feedback of users, patients and therapists.</p>
                 </div>
-                <img src='https://mymoodpath.com/wp-content/themes/moodpath/img/science/science_box_2_en.gif'/>
+                <img src='https://mymoodpath.com/wp-content/themes/moodpath/img/science/science_box_2_en.gif' alt='cunt' />
             </div>
             
         </div>

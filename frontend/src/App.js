@@ -19,6 +19,7 @@ class App extends React.Component {
     super();
 
     this.state = {
+      names: [],
       user: {
         firstName: 'John',
         lastName: 'Doe',
@@ -46,21 +47,30 @@ class App extends React.Component {
         q: []
       }
     }
+    this.username = 'username is taken';
+    this.age = 'age must be a number';
+
   }
 
   componentDidMount() {
-    if (localStorage.token) {
-      // console.log('there is a token');
-      fetch(`http://localhost:3000/users/${localStorage.id}`, {
-        headers: {
-          "Authorization": `Bearer ${localStorage.token}`
+    fetch('http://localhost:3000/users/usernames')
+    .then(res => res.json())
+    .then(names => {
+      this.setState({names}, () => {
+        if (localStorage.token) {
+          // console.log('there is a token');
+          fetch(`http://localhost:3000/users/${localStorage.id}`, {
+            headers: {
+              "Authorization": `Bearer ${localStorage.token}`
+            }
+          })
+          .then(res => res.json())
+          .then(user => {
+            this.setState({user});
+          });
         }
       })
-      .then(res => res.json())
-      .then(user => {
-        this.setState({user});
-      });
-    }
+    })
   }
 
   range = (start, end) => {
@@ -79,7 +89,6 @@ class App extends React.Component {
     this.setState({
       user: this.state.defaultUser
     })
-    // console.log(localStorage);
   }
 
   login = (e) => {
@@ -104,22 +113,31 @@ class App extends React.Component {
         localStorage.email = user.email;
         localStorage.age = user.age;
         localStorage.id = user.id;
-        // localStorage.journals = user.journals;
-        // localStorage.q = user.q;
-        // console.log(user);
         this.setState({
           user 
         })
       }
     });
     e.target.reset();
-    // this.history.push('/home');
   }
 
   signup = (e) => {
     e.preventDefault();
     // debugger;
     const [ firstName, lastName, username, age, email, password ] = this.range(0,5).map(i => e.target[i].value)
+
+    if (firstName === '' || lastName === '' || username === '' || age === '' || email === '' || password === '') return 'empty'
+
+    if (this.state.names.includes(username)) return 'username'
+
+    if (isNaN(age)) return 'age'
+
+    if (parseInt(age) < 18) return 'young'
+
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) return 'email'
+
+    if (password.length < 6) return 'password'
+
     fetch('http://localhost:3000/users/register', {
         method: 'POST',
         headers: {
@@ -167,7 +185,6 @@ class App extends React.Component {
           </Switch>
         </BrowserRouter>
         <UserContainer {...this.state.user}/>
-        <P5Wrapper sketch={sketch} />
         <P5Wrapper sketch={sketch} />
       </div>
     );

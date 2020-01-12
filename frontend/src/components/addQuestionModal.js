@@ -45,6 +45,7 @@ class AddQuestionModal extends React.Component {
 
     render() {
         // console.log(this.state);
+        
         return (
         <Modal open={this.state.showModal} onClose={this.closeModal} trigger={<Button onClick={() => this.setState({showModal:true})}>Add Question</Button>}>
             <Modal.Header>Please answer yes or no</Modal.Header>

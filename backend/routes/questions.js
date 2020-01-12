@@ -9,7 +9,7 @@ questions.get('/', async (req, res) => {
 })
 
 questions.get('/random', async (req, res) => {
-    res.status(200).json(await Question.find(Math.floor(Math.random() * 32)))
+    res.status(200).json(await Question.find(Math.floor(Math.random() * 38)))
 })
 
 questions.get('/:id', async (req, res) => {

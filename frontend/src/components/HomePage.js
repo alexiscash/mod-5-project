@@ -13,9 +13,8 @@ export default function HomePage(props) {
     }
     return (
         <div style={{textAlign: 'left', marginLeft: '8em', marginRight: '8em'}}>
-            <h1 style={{textAlign: 'center'}}>Home</h1>
-            <h2 style={{marginBottom: '2em', marginLeft: '2em'}}>Welcome, {localStorage.username}</h2>
-            <div className="first" style={{display: 'flex', marginRight: '10em', marginBottom: '2em', marginLeft: '2em'}}>
+            <h1 style={{textAlign: 'center', color: '#ffffff'}}>bitch</h1>
+            <div className="first" style={{display: 'flex', marginRight: '10em', marginBottom: '2em', marginLeft: '2em', marginTop: '4em'}}>
                 <div style={{display: 'inline', paddingLeft: '5em'}}>
                     <img height='350em' src={pic1} alt='dope' />
                 </div>
@@ -23,7 +22,7 @@ export default function HomePage(props) {
                     <h1 style={{fontSize: '3em'}}>Your mental health companion</h1>
                     <p style={{fontSize: '1.2em'}}>If you're struggling with depression or anxiety, Moodpath is the leading mental health app to guide you toward emotional well-being.</p>
                     <a href='https://track.tenjin.io/v0/click/hmb8vv7ZYKtvYFpvPUsH8P'><img style={imgStyle} src='https://mymoodpath.com/wp-content/themes/moodpath/img/logos/appstore_en.png' alt='super dope' /></a>
-                    <img style={imgStyle} src='https://mymoodpath.com/wp-content/themes/moodpath/img/logos/googleplay_en.png' alt='super duper dope' />
+                    <a href='https://play.google.com/store/apps/details?id=de.moodpath.android'><img style={imgStyle} src='https://mymoodpath.com/wp-content/themes/moodpath/img/logos/googleplay_en.png' alt='super duper dope' /></a>
                 </div>
             </div>
             <div style={{marginTop: '5em', marginRight: '50em', marginLeft: '2em'}}>

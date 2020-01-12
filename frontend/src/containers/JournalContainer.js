@@ -2,6 +2,8 @@ import React from 'react';
 import JournalPage from '../components/JournalPage';
 import Calender from '../components/Calender';
 import AddQuestionModal from '../components/addQuestionModal'
+import { Link } from 'react-router-dom'
+import { Button } from 'semantic-ui-react'
 
 export default class JournalContainer extends React.Component {
 
@@ -113,11 +115,12 @@ export default class JournalContainer extends React.Component {
         if (today !== 'none') {
             const display = this.state.journals.filter(j => j.date_id === today.id);
             this.setState({
-                display
+                display,
+                bool: true
             });
             return 'ayy lmao';
         }
-        this.setState({display: []});
+        this.setState({display: [], bool: false});
     }
 
     resetQuestions = () => {
@@ -127,7 +130,7 @@ export default class JournalContainer extends React.Component {
     }
 
     render() {
-        // console.log(this.state);
+        console.log(this.state.bool);
         let arr = [];
         for (let i = 0; i < this.state.display.length; i++) {
             let question = this.findWithAttr(this.state.q, 'id', this.state.display[i].question_id);
@@ -135,20 +138,29 @@ export default class JournalContainer extends React.Component {
         }
         return (
             localStorage.token ? 
-                <div style={{paddingLeft: '15em', paddingRight: '15em'}}>
-                    <h1>Journal</h1>
-                <Calender {...this.state.journals} filterByDate={this.filterByDate}/>
-                <button onClick={this.resetQuestions}>reset</button>
-                <div style={{overflow: 'scroll', height: '35em', background: '#80aaff'}}>
-                    {arr}
-                </div>
-                {this.state.bool ? <AddQuestionModal thang={this.postQuestion}/> : ''}
-                {/* <AddQuestionModal thang={this.postQuestion}/> */}
+                <div>
+                    <h1 style={{textAlign: 'center', marginTop: '2em'}}>Journal</h1>
+                    <div style={{display: 'flex', marginTop: '4em'}}>
+                        <div style={{margin: '7.5em 2em 2em 2em'}}>
+                            <Calender {...this.state.journals} filterByDate={this.filterByDate}/>
+                            <Button onClick={this.resetQuestions}>Reset</Button>
+                        </div>
+                        <div>
+                            <div style={{overflow: 'scroll', height: '35em', width: '45em', margin: '4em 4em 1em 4em'}}>
+                                {arr}
+                            </div>
+                            {this.state.bool ? <AddQuestionModal thang={this.postQuestion}/> : ''}
+                        </div>
+                        
+
+                        {/* <AddQuestionModal thang={this.postQuestion}/> */}
+                    </div>
+                    
                 </div>
             :
-                <div style={{paddingTop: '2em'}}>
+                <div style={{marginTop: '2em'}}>
                     <h1>Journal</h1>
-                    <h2>Please log in</h2>
+                    <h2>Please <Link to='/login'>Log In</Link></h2>
                 </div>
         )
     }

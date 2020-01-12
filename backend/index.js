@@ -28,8 +28,4 @@ app.get('/', (req, res) => {
     res.json(User.tableName);
 });
 
-// app.get('/slut', (req, res) => {
-//     res.send('max is a lil slut');
-// })
-
 app.listen(port, () => console.log('listening at ', port));
